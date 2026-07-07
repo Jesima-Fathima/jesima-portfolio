@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jesima Fathima S — Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F7F5;
+    --panel: #FFFFFF;
+    --border: #E1E4DF;
+    --border-strong: #C7CCC5;
+    --ink: #131A1D;
+    --ink-soft: #5B655F;
+    --ink-faint: #8B948D;
+    --blue: #2A5FDB;
+    --blue-dim: #E7EDFC;
+    --green: #1C8F5F;
+    --green-dim: #E4F3EC;
+    --amber: #B4761F;
+    --amber-dim: #FBF0DF;
+    --red: #C24A3B;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--blue); }
+  a:focus-visible, button:focus-visible, .chip:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(246,247,245,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 860px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand {
+    font-family: var(--mono); font-size: 14px; font-weight: 600;
+    color: var(--ink); text-decoration: none; letter-spacing: -0.02em;
+  }
+  .nav-brand .dot { color: var(--green); }
+  .nav-links { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft);
+    text-decoration: none; text-transform: lowercase;
+  }
+  .nav-links a:hover { color: var(--blue); }
+  .nav-links a::before { content: "/"; color: var(--ink-faint); margin-right: 2px; }
+
+  /* ---------- Hero / console ---------- */
+  .hero { padding: 72px 0 56px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-faint);
+    letter-spacing: 0.04em; margin: 0 0 14px;
+  }
+  h1.title {
+    font-family: var(--sans); font-weight: 600; font-size: clamp(32px, 5vw, 44px);
+    line-height: 1.15; margin: 0 0 10px; letter-spacing: -0.01em;
+  }
+  .role-line {
+    font-family: var(--mono); font-size: 15px; color: var(--ink-soft); margin: 0 0 34px;
+  }
+  .role-line .sep { color: var(--border-strong); margin: 0 8px; }
+
+  .hero-cta { margin: 0 0 26px; }
+
+  .console {
+    background: var(--ink); border-radius: 10px; overflow: hidden;
+    box-shadow: 0 1px 0 var(--border);
+  }
+  .console-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px; background: #1D2427; border-bottom: 1px solid #2C3438;
+  }
+  .console-dot { width: 9px; height: 9px; border-radius: 50%; background: #3A4247; }
+  .console-label {
+    font-family: var(--mono); font-size: 11px; color: #6F7A75; margin-left: 6px;
+  }
+  .console-body { padding: 20px 22px 24px; font-family: var(--mono); font-size: 13.5px; }
+  .req-line { color: #E8EAE7; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .method-get {
+    background: var(--blue); color: #fff; font-weight: 600; font-size: 11px;
+    padding: 2px 7px; border-radius: 4px; letter-spacing: 0.03em;
+  }
+  .req-path { color: #C9CFCA; }
+  .caret { display: inline-block; width: 7px; height: 15px; background: #E8EAE7; margin-left: 2px; animation: blink 1s steps(1) infinite; vertical-align: -2px; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .resp {
+    margin-top: 16px; padding-top: 14px; border-top: 1px dashed #2C3438;
+    color: #9FE8C4; opacity: 0; transform: translateY(4px);
+  }
+  .resp.show { opacity: 1; transform: translateY(0); transition: opacity .5s ease, transform .5s ease; }
+  .resp .status { color: #6EDBA0; font-weight: 600; }
+  .resp .k { color: #7FA8E0; }
+  .resp .s { color: #E3C97F; }
+  .resp .n { color: #E39A7F; }
+  .resp .punct { color: #6F7A75; }
+  .resp pre { margin: 8px 0 0; white-space: pre-wrap; font-family: var(--mono); }
+
+  /* ---------- Sections ---------- */
+  section { padding: 46px 0; border-top: 1px solid var(--border); }
+  .endpoint-tag {
+    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  }
+  .method {
+    font-family: var(--mono); font-size: 11px; font-weight: 600; padding: 2px 8px;
+    border-radius: 4px; letter-spacing: 0.03em;
+  }
+  .method.get { background: var(--blue-dim); color: var(--blue); }
+  .method.post { background: var(--green-dim); color: var(--green); }
+  .path { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+
+  h2.h {
+    font-size: 22px; font-weight: 600; margin: 0 0 16px; letter-spacing: -0.01em;
+  }
+  p.lede { color: var(--ink-soft); max-width: 62ch; margin: 0 0 4px; }
+
+  /* skills */
+  .skill-block { margin-bottom: 22px; }
+  .skill-block:last-child { margin-bottom: 0; }
+  .skill-label {
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--mono); font-size: 12.5px; padding: 5px 10px;
+    border-radius: 5px; border: 1px solid var(--border-strong); color: var(--ink);
+    background: var(--panel);
+  }
+  .chip.familiar { color: var(--ink-soft); border-style: dashed; background: transparent; }
+
+  /* experience */
+  .job-meta {
+    display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 20px;
+    font-size: 14px; color: var(--ink-soft);
+  }
+  .job-meta strong { color: var(--ink); font-weight: 600; }
+  ul.log { list-style: none; margin: 0; padding: 0; }
+  ul.log li {
+    position: relative; padding: 11px 0 11px 22px; border-bottom: 1px solid var(--border);
+    font-size: 15px;
+  }
+  ul.log li:first-child { border-top: 1px solid var(--border); }
+  ul.log li::before {
+    content: "›"; position: absolute; left: 0; top: 11px; color: var(--ink-faint);
+    font-family: var(--mono);
+  }
+  .impact {
+    display: inline-block; font-family: var(--mono); font-size: 11.5px; font-weight: 600;
+    color: var(--amber); background: var(--amber-dim); padding: 1px 7px; border-radius: 4px;
+    margin-left: 6px; white-space: nowrap;
+  }
+  .stack-line {
+    margin-top: 18px; font-family: var(--mono); font-size: 12px; color: var(--ink-faint);
+    line-height: 1.8;
+  }
+  .stack-line b { color: var(--ink-soft); font-weight: 600; }
+
+  /* achievements */
+  .events { list-style: none; margin: 0; padding: 0; }
+  .events li {
+    display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border);
+  }
+  .events li:first-child { border-top: 1px solid var(--border); }
+  .event-badge {
+    flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+    margin-top: 8px;
+  }
+  .event-text { font-size: 15px; }
+  .event-text b { font-weight: 600; }
+
+  /* education */
+  .edu-card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .edu-card .deg { font-weight: 600; font-size: 15.5px; margin-bottom: 4px; }
+  .edu-card .school { color: var(--ink-soft); font-size: 14px; margin-bottom: 6px; }
+  .edu-card .meta { font-family: var(--mono); font-size: 12.5px; color: var(--ink-faint); }
+
+  /* contact / footer */
+  .contact-card {
+    background: var(--ink); border-radius: 10px; padding: 26px 24px 22px; color: #E8EAE7;
+  }
+  .contact-req { font-family: var(--mono); font-size: 12.5px; color: #6EDBA0; margin-bottom: 14px; }
+  .contact-req .m { color: var(--green-dim); background: var(--green); padding: 1px 7px; border-radius: 4px; font-weight: 600; }
+  .contact-fields { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+  .contact-field {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    font-family: var(--mono); font-size: 13.5px; padding-bottom: 9px; border-bottom: 1px dashed #2C3438;
+  }
+  .contact-field span:first-child { color: #6F7A75; }
+  .contact-field a, .contact-field span.val { color: #E8EAE7; text-decoration: none; }
+  .contact-field a:hover { color: #9FE8C4; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--mono); font-size: 13px; font-weight: 500; text-decoration: none;
+    padding: 10px 16px; border-radius: 6px; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn.primary { background: #6EDBA0; color: #0D1712; }
+  .btn.primary:hover { background: #8AE6B4; }
+  .btn.ghost { border: 1px solid #384039; color: #E8EAE7; }
+  .btn.ghost:hover { border-color: #6F7A75; }
+
+  footer {
+    padding: 28px 0 50px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  }
+
+  .reveal { opacity: 0; transform: translateY(10px); }
+  .reveal.in { opacity: 1; transform: translateY(0); transition: opacity .6s ease, transform .6s ease; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+    .resp { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 600px) {
+    .nav-links { gap: 14px; }
+    .nav-links a span.full { display: none; }
+    .hero { padding: 48px 0 40px; }
+    section { padding: 34px 0; }
+    ul.log li { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-brand">jesima<span class="dot">.</span>dev</a>
+    <ul class="nav-links">
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#achievements">wins</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap" id="top">
+  <div class="hero">
+    <p class="eyebrow">// backend engineer, chennai</p>
+    <h1 class="title">Jesima Fathima S</h1>
+    <p class="role-line">Software Engineer<span class="sep">/</span>Java<span class="sep">/</span>Spring Boot<span class="sep">/</span>Microservices</p>
+
+    <div class="hero-cta">
+      <a class="btn primary" href="https://docs.google.com/document/d/16kGwrPt0LWKMVrx8aSgx_JQUsNntHlZZc3-snVOIMUM/edit?usp=sharing" target="_blank" rel="noopener">Download resume (PDF) ↓</a>
+    </div>
+
+    <div class="console">
+      <div class="console-bar">
+        <span class="console-dot"></span><span class="console-dot"></span><span class="console-dot"></span>
+        <span class="console-label">profile.request</span>
+      </div>
+      <div class="console-body">
+        <div class="req-line">
+          <span class="method-get">GET</span>
+          <span class="req-path" id="reqPath"></span><span class="caret" id="caret"></span>
+        </div>
+        <div class="resp" id="resp">
+          <pre><span class="status">200 OK</span>  <span class="punct">·</span> <span class="k">profile loaded</span>
+<span class="punct">{</span>
+  <span class="k">"experience_years"</span><span class="punct">:</span> <span class="n">4</span><span class="punct">,</span>
+  <span class="k">"primary_stack"</span><span class="punct">:</span> <span class="punct">[</span><span class="s">"Java"</span><span class="punct">,</span> <span class="s">"Spring Boot"</span><span class="punct">,</span> <span class="s">"REST APIs"</span><span class="punct">]</span><span class="punct">,</span>
+  <span class="k">"currently"</span><span class="punct">:</span> <span class="s">"open to new roles"</span><span class="punct">,</span>
+  <span class="k">"location"</span><span class="punct">:</span> <span class="s">"Chennai, India"</span>
+<span class="punct">}</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="summary" class="reveal">
+    <div class="endpoint-tag"><span class="method get">GET</span><span class="path">/summary</span></div>
+    <p class="lede">
+      Software Engineer with 4+ years building and supporting enterprise applications using Java, Spring Boot,
+      REST APIs, microservices, and API management. Experienced in end-to-end backend delivery — API design,
+      authentication and authorization, caching, production deployments, and incident resolution. Comfortable
+      improving API performance, running Okta-based Single Sign-On migrations, and working across Docker,
+      Kubernetes, CI/CD, and observability tooling.
+    </p>
+  </section>
+
+  <section id="skills" class="reveal">
+    <div class="endpoint-tag"><span class="method get">GET</span><span class="path">/skills</span></div>
+    <h2 class="h">What I actually use day to day</h2>
+
+    <div class="skill-block">
+      <div class="skill-label">hands_on []</div>
+      <div class="chips">
+        <span class="chip">Java</span><span class="chip">Spring Boot</span><span class="chip">REST APIs</span>
+        <span class="chip">Microservices</span><span class="chip">API Design</span><span class="chip">Apigee</span>
+        <span class="chip">Swagger / OpenAPI</span><span class="chip">Okta</span><span class="chip">SSO</span>
+        <span class="chip">Authentication</span><span class="chip">Authorization</span><span class="chip">Redis</span>
+        <span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">CI/CD</span>
+        <span class="chip">AngularJS</span><span class="chip">JavaScript</span><span class="chip">Kibana</span>
+        <span class="chip">Datadog</span><span class="chip">JBoss</span><span class="chip">WildFly</span>
+      </div>
+    </div>
+
+    <div class="skill-block">
+      <div class="skill-label">familiar_with []</div>
+      <div class="chips">
+        <span class="chip familiar">Python</span><span class="chip familiar">Apache Kafka</span>
+        <span class="chip familiar">gRPC</span><span class="chip familiar">AWS</span>
+        <span class="chip familiar">Distributed Systems</span><span class="chip familiar">System Design</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="reveal">
+    <div class="endpoint-tag"><span class="method get">GET</span><span class="path">/experience</span></div>
+    <h2 class="h">Software Engineer</h2>
+    <div class="job-meta">
+      <span><strong>Renault Nissan Technology and Business Center India Pvt Ltd</strong></span>
+      <span>MWC, Chengalpattu, India</span>
+      <span>Aug 2021 – Sep 2025</span>
+    </div>
+
+    <ul class="log">
+      <li>Developed and enhanced a Car Configurator application supporting 3 automobile brands across 15+ countries, enabling dealership sales teams to configure vehicles and access real-time pricing.</li>
+      <li>Designed, developed, and maintained RESTful APIs using Java and Spring Boot for vehicle configuration, pricing, constraints, applicability, services, accessories, and stock vehicle details.</li>
+      <li>Implemented Redis caching for frequently accessed configuration and pricing data<span class="impact">-30–40% latency</span><span class="impact">-25–35% DB load</span></li>
+      <li>Migrated and managed enterprise APIs through Apigee API Management — centralized security, rate limiting, monitoring, and lifecycle management for multiple upstream clients.</li>
+      <li>Implemented Okta-based Single Sign-On, migrating identity management off NetIQ and strengthening authentication and authorization for application users.</li>
+      <li>Migrated the application server from JBoss to WildFly to meet Okta's requirements and improve production runtime stability.</li>
+      <li>Built modular microservices for vehicle image retrieval, colour selection, and stock vehicle configuration.</li>
+      <li>Built and maintained internal admin portals for user administration and day-to-day configuration management.</li>
+      <li>Owned backend modules end to end — requirement analysis, design, build, testing, deployment, production support, hotfixes.</li>
+      <li>First point of contact for production issues on configuration, pricing, and auth — triaged through Kibana and Datadog.</li>
+      <li>Worked closely with QA, DevOps, and business teams to ship releases with minimal downtime.</li>
+      <li>Containerized services with Docker; ran deployments on Kubernetes.</li>
+      <li>Kept CI/CD pipelines healthy for automated builds, tests, and deploys.</li>
+    </ul>
+
+    <div class="stack-line"><b>stack:</b> Java · Spring Boot · REST APIs · Microservices · Redis · Apigee · Okta · Docker · Kubernetes · CI/CD · Kibana · Datadog · AngularJS · JBoss · WildFly</div>
+  </section>
+
+  <section id="achievements" class="reveal">
+    <div class="endpoint-tag"><span class="method get">GET</span><span class="path">/achievements</span></div>
+    <h2 class="h">Notable wins</h2>
+    <ul class="events">
+      <li><span class="event-badge"></span><span class="event-text"><b>Accelerate Action Award</b> (Women's Day — Team Award), part of the Best Women's Team for collaboration and delivery of high-impact business solutions.</span></li>
+      <li><span class="event-badge"></span><span class="event-text">Cut configuration and pricing API response times by up to <b>40%</b> through Redis caching.</span></li>
+      <li><span class="event-badge"></span><span class="event-text">Delivered the enterprise <b>Okta SSO integration</b> and <b>Apigee API migration</b>, unifying authentication, security, and monitoring.</span></li>
+      <li><span class="event-badge"></span><span class="event-text">Owned backend and production support for <b>critical configuration, pricing, and authentication modules</b>.</span></li>
+    </ul>
+  </section>
+
+  <section id="education" class="reveal">
+    <div class="endpoint-tag"><span class="method get">GET</span><span class="path">/education</span></div>
+    <h2 class="h">Education</h2>
+    <div class="edu-card">
+      <div class="deg">Bachelor of Engineering — Computer Science and Engineering</div>
+      <div class="school">University College of Engineering, BIT Campus, Anna University, Trichy</div>
+      <div class="meta">2017 – 2021 · CGPA 7.5</div>
+    </div>
+  </section>
+
+  <section id="contact" class="reveal">
+    <div class="endpoint-tag"><span class="method post">POST</span><span class="path">/contact</span></div>
+    <div class="contact-card">
+      <div class="contact-req"><span class="m">POST</span>&nbsp; /v1/contact &nbsp;·&nbsp; say hello</div>
+      <div class="contact-fields">
+        <div class="contact-field"><span>email</span><a href="mailto:jesimafathima99@gmail.com">jesimafathima99@gmail.com</a></div>
+        <div class="contact-field"><span>location</span><span class="val">Chennai, India</span></div>
+        <div class="contact-field"><span>linkedin</span><a href="http://linkedin.com/in/jesimafathima5634511b1" target="_blank" rel="noopener">/in/jesimafathima5634511b1</a></div>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="mailto:jesimafathima99@gmail.com">Send email →</a>
+        <a class="btn ghost" href="http://linkedin.com/in/jesimafathima5634511b1" target="_blank" rel="noopener">View LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Jesima Fathima S</span>
+    <span>built with Java-shaped patience</span>
+  </footer>
+</div>
+
+<script>
+  // Typing effect for the hero console
+  (function () {
+    const pathEl = document.getElementById('reqPath');
+    const caret = document.getElementById('caret');
+    const resp = document.getElementById('resp');
+    const text = '/v1/profile';
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduced) {
+      pathEl.textContent = text;
+      resp.classList.add('show');
+      caret.style.display = 'none';
+    } else {
+      let i = 0;
+      function type() {
+        if (i <= text.length) {
+          pathEl.textContent = text.slice(0, i);
+          i++;
+          setTimeout(type, 55);
+        } else {
+          setTimeout(() => { resp.classList.add('show'); caret.style.opacity = '0.4'; }, 300);
+        }
+      }
+      setTimeout(type, 400);
+    }
+  })();
+
+  // Scroll reveal
+  (function () {
+    const items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(el => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(el => io.observe(el));
+  })();
+</script>
+
+</body>
+</html>
